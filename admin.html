@@ -1,1 +1,773 @@
+<!-- =========================================
+FILE: admin.html
+========================================= -->
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
+  <title>Admin Panel - helpLine BD Malaysia</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+
+  <style>
+
+    body{
+      background:#f5f7fb;
+      font-family: Arial, sans-serif;
+    }
+
+    .navbar{
+      background:#0d6efd;
+    }
+
+    .navbar-brand{
+      color:#fff !important;
+      font-weight:700;
+    }
+
+    .card{
+      border:none;
+      border-radius:16px;
+    }
+
+    .hidden{
+      display:none;
+    }
+
+    .news-image{
+      width:100%;
+      height:180px;
+      object-fit:cover;
+      border-radius:10px;
+    }
+
+    .preview-image{
+      width:100%;
+      max-height:250px;
+      object-fit:cover;
+      border-radius:10px;
+      margin-top:10px;
+      display:none;
+    }
+
+    .loading{
+      display:none;
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+
+    <a class="navbar-brand" href="index.html">
+      helpLine BD Malaysia
+    </a>
+
+  </div>
+</nav>
+
+<div class="container py-5">
+
+  <!-- LOGIN SECTION -->
+  <div id="loginSection" class="row justify-content-center">
+
+    <div class="col-md-5">
+
+      <div class="card shadow">
+        <div class="card-body p-4">
+
+          <h3 class="text-center mb-4">
+            অ্যাডমিন লগইন
+          </h3>
+
+          <div class="alert alert-info">
+
+            <strong>ডেমো লগইন</strong><br>
+
+            ইমেইল:
+            admin@helpline.com
+
+            <br>
+
+            পাসওয়ার্ড:
+            123456
+
+          </div>
+
+          <form id="loginForm">
+
+            <div class="mb-3">
+              <label class="form-label">
+                ইমেইল
+              </label>
+
+              <input
+                type="email"
+                id="loginEmail"
+                class="form-control"
+                required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">
+                পাসওয়ার্ড
+              </label>
+
+              <input
+                type="password"
+                id="loginPassword"
+                class="form-control"
+                required
+              />
+            </div>
+
+            <button class="btn btn-primary w-100">
+              লগইন করুন
+            </button>
+
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ADMIN PANEL -->
+  <div id="adminPanel" class="hidden">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+      <h2>
+        অ্যাডমিন ড্যাশবোর্ড
+      </h2>
+
+      <button class="btn btn-danger" id="logoutBtn">
+        লগআউট
+      </button>
+
+    </div>
+
+    <!-- ADD NEWS -->
+    <div class="card shadow mb-5">
+
+      <div class="card-body p-4">
+
+        <h4 class="mb-4">
+          নতুন খবর পোস্ট করুন
+        </h4>
+
+        <form id="newsForm">
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              খবরের শিরোনাম
+            </label>
+
+            <input
+              type="text"
+              id="newsTitle"
+              class="form-control"
+              required
+            />
+
+          </div>
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              খবরের বিস্তারিত
+            </label>
+
+            <textarea
+              id="newsContent"
+              class="form-control"
+              rows="5"
+              required
+            ></textarea>
+
+          </div>
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              ছবি আপলোড করুন
+            </label>
+
+            <input
+              type="file"
+              id="newsImageFile"
+              class="form-control"
+              accept="image/*"
+              required
+            />
+
+            <!-- IMAGE PREVIEW -->
+            <img id="previewImage" class="preview-image"/>
+
+          </div>
+
+          <button class="btn btn-success w-100" id="postBtn">
+            খবর প্রকাশ করুন
+          </button>
+
+          <div class="text-center mt-3 loading" id="loadingBox">
+
+            <div class="spinner-border text-primary"></div>
+
+            <p class="mt-2">
+              খবর পোস্ট হচ্ছে...
+            </p>
+
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+    <!-- NEWS LIST -->
+    <div class="card shadow mb-5">
+
+      <div class="card-body p-4">
+
+        <h4 class="mb-4">
+          প্রকাশিত খবরসমূহ
+        </h4>
+
+        <div id="newsList"></div>
+
+      </div>
+
+    </div>
+
+    <!-- USER SUGGESTIONS -->
+    <div class="card shadow">
+
+      <div class="card-body p-4">
+
+        <h4 class="mb-4">
+          ইউজার সাজেশন
+        </h4>
+
+        <div id="suggestionsList"></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- FIREBASE -->
+<script type="module">
+
+  // ================= IMPORTS =================
+
+  import {
+    initializeApp
+  } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
+  import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    deleteDoc,
+    doc,
+    updateDoc,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+  import {
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL
+  } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
+
+  // ================= FIREBASE CONFIG =================
+
+  // নিজের Firebase Config এখানে বসান
+
+  const firebaseConfig = {
+
+    apiKey: "YOUR_API_KEY",
+
+    authDomain: "YOUR_AUTH_DOMAIN",
+
+    projectId: "YOUR_PROJECT_ID",
+
+    storageBucket: "YOUR_STORAGE_BUCKET",
+
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+
+    appId: "YOUR_APP_ID"
+
+  };
+
+  // ================= INITIALIZE =================
+
+  const app = initializeApp(firebaseConfig);
+
+  const auth = getAuth(app);
+
+  const db = getFirestore(app);
+
+  const storage = getStorage(app);
+
+  // ================= DOM =================
+
+  const loginSection = document.getElementById("loginSection");
+
+  const adminPanel = document.getElementById("adminPanel");
+
+  const newsList = document.getElementById("newsList");
+
+  const suggestionsList = document.getElementById("suggestionsList");
+
+  const previewImage = document.getElementById("previewImage");
+
+  const imageInput = document.getElementById("newsImageFile");
+
+  // ================= IMAGE PREVIEW =================
+
+  imageInput.addEventListener("change", (e) => {
+
+    const file = e.target.files[0];
+
+    if(file){
+
+      previewImage.src = URL.createObjectURL(file);
+
+      previewImage.style.display = "block";
+
+    }
+
+  });
+
+  // ================= LOGIN =================
+
+  document.getElementById("loginForm")
+    .addEventListener("submit", async (e) => {
+
+      e.preventDefault();
+
+      const email =
+        document.getElementById("loginEmail").value;
+
+      const password =
+        document.getElementById("loginPassword").value;
+
+      try{
+
+        await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+      } catch(error){
+
+        alert("লগইন ব্যর্থ হয়েছে");
+
+        console.error(error);
+
+      }
+
+    });
+
+  // ================= AUTH STATE =================
+
+  onAuthStateChanged(auth, (user) => {
+
+    if(user){
+
+      loginSection.classList.add("hidden");
+
+      adminPanel.classList.remove("hidden");
+
+      loadNews();
+
+      loadSuggestions();
+
+    } else {
+
+      loginSection.classList.remove("hidden");
+
+      adminPanel.classList.add("hidden");
+
+    }
+
+  });
+
+  // ================= LOGOUT =================
+
+  document.getElementById("logoutBtn")
+    .addEventListener("click", async () => {
+
+      await signOut(auth);
+
+    });
+
+  // ================= ADD NEWS =================
+
+  document.getElementById("newsForm")
+    .addEventListener("submit", async (e) => {
+
+      e.preventDefault();
+
+      const postBtn =
+        document.getElementById("postBtn");
+
+      const loadingBox =
+        document.getElementById("loadingBox");
+
+      postBtn.disabled = true;
+
+      loadingBox.style.display = "block";
+
+      try{
+
+        const title =
+          document.getElementById("newsTitle").value;
+
+        const content =
+          document.getElementById("newsContent").value;
+
+        const imageFile =
+          document.getElementById("newsImageFile").files[0];
+
+        // IMAGE UPLOAD
+
+        const imageRef = ref(
+          storage,
+          `news/${Date.now()}_${imageFile.name}`
+        );
+
+        await uploadBytes(imageRef, imageFile);
+
+        const imageUrl =
+          await getDownloadURL(imageRef);
+
+        // SAVE TO FIRESTORE
+
+        await addDoc(collection(db, "news"), {
+
+          title,
+          content,
+          image: imageUrl,
+          date: new Date().toLocaleDateString("bn-BD"),
+          timestamp: serverTimestamp()
+
+        });
+
+        alert("খবর সফলভাবে পোস্ট হয়েছে");
+
+        e.target.reset();
+
+        previewImage.style.display = "none";
+
+        loadNews();
+
+      } catch(error){
+
+        console.error(error);
+
+        alert("খবর পোস্ট করতে সমস্যা হয়েছে");
+
+      }
+
+      postBtn.disabled = false;
+
+      loadingBox.style.display = "none";
+
+    });
+
+  // ================= LOAD NEWS =================
+
+  async function loadNews(){
+
+    newsList.innerHTML =
+      "<p>খবর লোড হচ্ছে...</p>";
+
+    try{
+
+      const snapshot =
+        await getDocs(collection(db, "news"));
+
+      newsList.innerHTML = "";
+
+      if(snapshot.empty){
+
+        newsList.innerHTML = `
+          <div class="alert alert-warning">
+            কোন খবর পাওয়া যায়নি
+          </div>
+        `;
+
+      }
+
+      snapshot.forEach((item) => {
+
+        const data = item.data();
+
+        newsList.innerHTML += `
+
+          <div class="card mb-4 border-0 shadow-sm">
+
+            <div class="card-body">
+
+              <img
+                src="${data.image}"
+                class="news-image mb-3"
+              />
+
+              <h5>
+                ${data.title}
+              </h5>
+
+              <p>
+                ${data.content}
+              </p>
+
+              <small class="text-muted">
+                ${data.date || ""}
+              </small>
+
+              <div class="mt-3">
+
+                <button
+                  class="btn btn-danger btn-sm"
+                  onclick="deleteNews('${item.id}')"
+                >
+                  ডিলিট
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        `;
+
+      });
+
+    } catch(error){
+
+      console.error(error);
+
+    }
+
+  }
+
+  // ================= DELETE NEWS =================
+
+  window.deleteNews = async (id) => {
+
+    const confirmDelete =
+      confirm("আপনি কি ডিলিট করতে চান?");
+
+    if(confirmDelete){
+
+      await deleteDoc(doc(db, "news", id));
+
+      loadNews();
+
+    }
+
+  };
+
+  // ================= LOAD SUGGESTIONS =================
+
+  async function loadSuggestions(){
+
+    suggestionsList.innerHTML =
+      "<p>সাজেশন লোড হচ্ছে...</p>";
+
+    try{
+
+      const snapshot =
+        await getDocs(collection(db, "suggestions"));
+
+      suggestionsList.innerHTML = "";
+
+      if(snapshot.empty){
+
+        suggestionsList.innerHTML = `
+          <div class="alert alert-warning">
+            কোন সাজেশন নেই
+          </div>
+        `;
+
+      }
+
+      snapshot.forEach((item) => {
+
+        const data = item.data();
+
+        suggestionsList.innerHTML += `
+
+          <div class="border rounded p-3 mb-3">
+
+            <h6>
+              ${data.name}
+            </h6>
+
+            <p>
+              <strong>ইমেইল:</strong>
+              ${data.email}
+            </p>
+
+            <p>
+              <strong>লিংক:</strong>
+              ${data.link}
+            </p>
+
+            <p>
+              ${data.description || ""}
+            </p>
+
+            <button
+              class="btn btn-success btn-sm"
+              onclick="approveSuggestion(
+                '${item.id}',
+                '${data.link}',
+                '${data.description || ""}'
+              )"
+            >
+              Approve
+            </button>
+
+            <button
+              class="btn btn-danger btn-sm"
+              onclick="rejectSuggestion('${item.id}')"
+            >
+              Reject
+            </button>
+
+          </div>
+
+        `;
+
+      });
+
+    } catch(error){
+
+      console.error(error);
+
+    }
+
+  }
+
+  // ================= APPROVE SUGGESTION =================
+
+  window.approveSuggestion =
+    async (id, link, description) => {
+
+      try{
+
+        await addDoc(collection(db, "news"), {
+
+          title: "User Suggestion",
+
+          content: description || link,
+
+          image:
+            "https://via.placeholder.com/600x350",
+
+          date:
+            new Date().toLocaleDateString("bn-BD"),
+
+          timestamp: serverTimestamp()
+
+        });
+
+        await updateDoc(
+          doc(db, "suggestions", id),
+          {
+            status: "approved"
+          }
+        );
+
+        alert("সাজেশন অনুমোদন হয়েছে");
+
+        loadSuggestions();
+
+        loadNews();
+
+      } catch(error){
+
+        console.error(error);
+
+      }
+
+    };
+
+  // ================= REJECT =================
+
+  window.rejectSuggestion = async (id) => {
+
+    const confirmReject =
+      confirm("রিজেক্ট করতে চান?");
+
+    if(confirmReject){
+
+      await deleteDoc(doc(db, "suggestions", id));
+
+      loadSuggestions();
+
+    }
+
+  };
+
+</script>
+
+<!-- =========================================
+FIREBASE STORAGE RULES
+
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    match /news/{allPaths=**} {
+
+      allow read: if true;
+
+      allow write: if request.auth != null;
+
+    }
+
+  }
+}
+
+========================================= -->
+
+</body>
+</html>
