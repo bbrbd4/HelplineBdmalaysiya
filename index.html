@@ -1,1 +1,579 @@
+<!-- =========================
+FILE: index.html
+========================= -->
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>helpLine BD Malaysia</title>
 
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <style>
+    body{
+      background:#f4f7fb;
+      font-family: Arial, sans-serif;
+    }
+
+    .navbar{
+      background:#0d6efd;
+    }
+
+    .navbar-brand,
+    .nav-link{
+      color:#fff !important;
+      font-weight:600;
+    }
+
+    .hero{
+      background:linear-gradient(135deg,#0d6efd,#198754);
+      color:#fff;
+      padding:70px 20px;
+      text-align:center;
+    }
+
+    .service-card{
+      border:none;
+      border-radius:16px;
+      transition:0.3s;
+      height:100%;
+    }
+
+    .service-card:hover{
+      transform:translateY(-5px);
+      box-shadow:0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .news-card img{
+      height:220px;
+      object-fit:cover;
+    }
+
+    .section-title{
+      font-weight:700;
+      margin-bottom:20px;
+      color:#0d6efd;
+    }
+
+    footer{
+      background:#111827;
+      color:#fff;
+      padding:20px;
+      margin-top:60px;
+      text-align:center;
+    }
+
+    .loading{
+      text-align:center;
+      padding:20px;
+      display:none;
+    }
+
+    .modal-body li{
+      margin-bottom:10px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="#">helpLine BD Malaysia</a>
+
+    <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="menu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#">হোম</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="admin.html">অ্যাডমিন</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <h1 class="fw-bold">বাংলাদেশিদের জন্য মালয়েশিয়া হেল্পলাইন</h1>
+    <p class="mt-3">
+      ই-ভিসা, FOMEMA, ই-পাসপোর্ট, জন্ম নিবন্ধনসহ গুরুত্বপূর্ণ অনলাইন সেবা এক জায়গায়।
+    </p>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="container py-5">
+  <h2 class="section-title text-center">গুরুত্বপূর্ণ সেবাসমূহ</h2>
+
+  <div class="row g-4">
+
+    <!-- SERVICE 1 -->
+    <div class="col-md-6 col-lg-3">
+      <div class="card service-card shadow-sm">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">মালয়েশিয়া eVisa</h5>
+
+          <p class="card-text">
+            মালয়েশিয়ার ই-ভিসা স্ট্যাটাস সহজে অনলাইনে যাচাই করুন।
+          </p>
+
+          <div class="mt-auto d-grid gap-2">
+            <a href="https://eservices.imi.gov.my/myimms/VPAStsInq?MAD_DOC_NO=&MAD_DOC_CTRY_CD=BGD&search=CARIAN&lang=en"
+               target="_blank"
+               class="btn btn-primary">
+              🔗 Open Site
+            </a>
+
+            <button class="btn btn-outline-secondary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#visaModal">
+              ℹ️ বিস্তারিত
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICE 2 -->
+    <div class="col-md-6 col-lg-3">
+      <div class="card service-card shadow-sm">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">FOMEMA চেক</h5>
+
+          <p class="card-text">
+            মেডিকেল রিপোর্ট এবং FOMEMA স্ট্যাটাস যাচাই করুন।
+          </p>
+
+          <div class="mt-auto d-grid gap-2">
+            <a href="https://eservices.imi.gov.my/myimms/FomemaStatus"
+               target="_blank"
+               class="btn btn-success">
+              🔗 Open Site
+            </a>
+
+            <button class="btn btn-outline-secondary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#fomemaModal">
+              ℹ️ বিস্তারিত
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICE 3 -->
+    <div class="col-md-6 col-lg-3">
+      <div class="card service-card shadow-sm">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">বাংলাদেশ ই-পাসপোর্ট</h5>
+
+          <p class="card-text">
+            ই-পাসপোর্ট আবেদন স্ট্যাটাস অনলাইনে দেখুন।
+          </p>
+
+          <div class="mt-auto d-grid gap-2">
+            <a href="https://www.epassport.gov.bd/authorization/application-status"
+               target="_blank"
+               class="btn btn-danger">
+              🔗 Open Site
+            </a>
+
+            <button class="btn btn-outline-secondary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#passportModal">
+              ℹ️ বিস্তারিত
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICE 4 -->
+    <div class="col-md-6 col-lg-3">
+      <div class="card service-card shadow-sm">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">জন্ম নিবন্ধন যাচাই</h5>
+
+          <p class="card-text">
+            অনলাইনে জন্ম নিবন্ধন তথ্য যাচাই করুন।
+          </p>
+
+          <div class="mt-auto d-grid gap-2">
+            <a href="https://everify.bdris.gov.bd/UDRNVerification"
+               target="_blank"
+               class="btn btn-warning">
+              🔗 Open Site
+            </a>
+
+            <button class="btn btn-outline-secondary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#birthModal">
+              ℹ️ বিস্তারিত
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- NEWS SECTION -->
+<section class="container py-5">
+  <h2 class="section-title text-center">সর্বশেষ খবর</h2>
+
+  <div class="loading" id="newsLoading">
+    <div class="spinner-border text-primary"></div>
+    <p>খবর লোড হচ্ছে...</p>
+  </div>
+
+  <div class="row g-4" id="newsContainer"></div>
+</section>
+
+<!-- USER SUGGESTION -->
+<section class="container py-5">
+  <div class="card shadow border-0">
+    <div class="card-body p-4">
+
+      <h2 class="section-title text-center">
+        খবর সাজেশন পাঠান
+      </h2>
+
+      <form id="suggestionForm">
+        <div class="row">
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">আপনার নাম</label>
+            <input type="text" class="form-control" id="name" required>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">ইমেইল</label>
+            <input type="email" class="form-control" id="email" required>
+          </div>
+
+          <div class="col-12 mb-3">
+            <label class="form-label">খবরের লিংক</label>
+            <input type="url" class="form-control" id="link" required>
+          </div>
+
+          <div class="col-12 mb-3">
+            <label class="form-label">বিস্তারিত (ঐচ্ছিক)</label>
+            <textarea class="form-control" rows="4" id="description"></textarea>
+          </div>
+
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">
+          সাবমিট করুন
+        </button>
+
+      </form>
+
+      <div class="alert alert-success mt-3 d-none" id="successMessage">
+        আপনার খবর সফলভাবে জমা হয়েছে। ধন্যবাদ।
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="mb-0">
+    © 2026 helpLine BD Malaysia | সকল অধিকার সংরক্ষিত
+  </p>
+</footer>
+
+<!-- ================= MODALS ================= -->
+
+<!-- VISA -->
+<div class="modal fade" id="visaModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">মালয়েশিয়া eVisa চেক করার নিয়ম</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <ol>
+          <li>Open Site বাটনে ক্লিক করুন।</li>
+          <li>পাসপোর্ট নম্বর লিখুন।</li>
+          <li>Country হিসেবে Bangladesh নির্বাচন করুন।</li>
+          <li>Search বাটনে ক্লিক করুন।</li>
+          <li>আপনার ভিসা স্ট্যাটাস স্ক্রিনে দেখাবে।</li>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOMEMA -->
+<div class="modal fade" id="fomemaModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">FOMEMA চেক করার নিয়ম</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <ol>
+          <li>অফিশিয়াল ওয়েবসাইটে প্রবেশ করুন।</li>
+          <li>পাসপোর্ট নম্বর অথবা Worker ID দিন।</li>
+          <li>সঠিক তথ্য পূরণ করুন।</li>
+          <li>Search বাটনে ক্লিক করুন।</li>
+          <li>মেডিকেল স্ট্যাটাস ও রিপোর্ট দেখতে পারবেন।</li>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- PASSPORT -->
+<div class="modal fade" id="passportModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">ই-পাসপোর্ট স্ট্যাটাস চেক</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <ol>
+          <li>Application ID সংগ্রহ করুন।</li>
+          <li>ওয়েবসাইটে Application ID এবং জন্মতারিখ লিখুন।</li>
+          <li>Captcha পূরণ করুন।</li>
+          <li>Search বাটনে ক্লিক করুন।</li>
+          <li>পাসপোর্টের বর্তমান অবস্থা দেখতে পাবেন।</li>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- BIRTH -->
+<div class="modal fade" id="birthModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">জন্ম নিবন্ধন যাচাই</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <ol>
+          <li>জন্ম নিবন্ধন নম্বর লিখুন।</li>
+          <li>জন্ম তারিখ নির্বাচন করুন।</li>
+          <li>যাচাই বাটনে ক্লিক করুন।</li>
+          <li>সঠিক তথ্য থাকলে রেকর্ড দেখাবে।</li>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Firebase -->
+<script type="module">
+
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+
+  import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    orderBy,
+    query,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+  // ================= FIREBASE CONFIG =================
+  // নিজের Firebase Config এখানে বসান
+
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // ================= LOAD NEWS =================
+
+  const newsContainer = document.getElementById("newsContainer");
+  const newsLoading = document.getElementById("newsLoading");
+
+  async function loadNews() {
+
+    newsLoading.style.display = "block";
+
+    try {
+
+      const q = query(
+        collection(db, "news"),
+        orderBy("date", "desc")
+      );
+
+      const snapshot = await getDocs(q);
+
+      newsContainer.innerHTML = "";
+
+      if(snapshot.empty){
+        newsContainer.innerHTML = `
+          <div class="col-12 text-center">
+            <div class="alert alert-warning">
+              এখনো কোন খবর যোগ করা হয়নি।
+            </div>
+          </div>
+        `;
+      }
+
+      snapshot.forEach((doc) => {
+
+        const data = doc.data();
+
+        newsContainer.innerHTML += `
+          <div class="col-md-6 col-lg-4">
+            <div class="card news-card shadow-sm border-0 h-100">
+
+              <img src="${data.image || 'https://via.placeholder.com/500x300'}"
+                   class="card-img-top">
+
+              <div class="card-body">
+
+                <h5 class="card-title">
+                  ${data.title}
+                </h5>
+
+                <p class="card-text">
+                  ${data.content}
+                </p>
+
+              </div>
+
+              <div class="card-footer bg-white">
+                <small class="text-muted">
+                  ${data.date || ''}
+                </small>
+              </div>
+
+            </div>
+          </div>
+        `;
+      });
+
+    } catch(error){
+
+      console.error(error);
+
+      newsContainer.innerHTML = `
+        <div class="alert alert-danger">
+          খবর লোড করতে সমস্যা হয়েছে।
+        </div>
+      `;
+    }
+
+    newsLoading.style.display = "none";
+  }
+
+  loadNews();
+
+  // ================= SUGGESTION FORM =================
+
+  const form = document.getElementById("suggestionForm");
+  const successMessage = document.getElementById("successMessage");
+
+  form.addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    const submitBtn = form.querySelector("button");
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = "অপেক্ষা করুন...";
+
+    try{
+
+      await addDoc(collection(db, "suggestions"), {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        link: document.getElementById("link").value,
+        description: document.getElementById("description").value,
+        status: "pending",
+        timestamp: serverTimestamp()
+      });
+
+      form.reset();
+
+      successMessage.classList.remove("d-none");
+
+      setTimeout(() => {
+        successMessage.classList.add("d-none");
+      }, 4000);
+
+    } catch(error){
+
+      alert("সমস্যা হয়েছে");
+
+      console.error(error);
+    }
+
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = "সাবমিট করুন";
+
+  });
+
+</script>
+
+<!-- ================= FIRESTORE RULES =================
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // সবাই news পড়তে পারবে
+    match /news/{document} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // সবাই suggestion submit করতে পারবে
+    match /suggestions/{document} {
+      allow create: if true;
+      allow read, update, delete: if request.auth != null;
+    }
+  }
+}
+==================================================== -->
+
+</body>
+</html>
